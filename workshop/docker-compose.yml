@@ -1,0 +1,20 @@
+version: '3'
+services:
+  test:
+    build: .
+    
+    networks:
+      - mynetwork
+
+    ports:
+      - "127.0.0.1:5000:5000"
+    
+    expose:
+      - "5000"
+    
+    volumes:
+      - ./app:/app
+    
+networks:
+  mynetwork:
+    driver: bridge
