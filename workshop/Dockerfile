@@ -1,5 +1,4 @@
-FROM tiangolo/uwsgi-nginx-flask:python3.6
-
+FROM python:3.7.6-slim-stretch
 
 ADD ./app /app
 VOLUME /app
