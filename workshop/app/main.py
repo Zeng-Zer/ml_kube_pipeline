@@ -12,4 +12,5 @@ api.add_namespace(house_pricing)
 
 
 if __name__ == '__main__':
+    print("starting on 0.0.0.0:5000")
     app.run(port=5000, host='0.0.0.0')
