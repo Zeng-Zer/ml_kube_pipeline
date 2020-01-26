@@ -5,4 +5,6 @@ VOLUME /app
 
 WORKDIR /app
 
+EXPOSE 5000
+
 RUN pip install -r ./models/requirements.txt
