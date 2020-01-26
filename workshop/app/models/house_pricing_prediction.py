@@ -36,23 +36,27 @@ class HousePricingPrediction:
                 {
                     'name': 'mean-squared-error',
                     'numberValue':  mse,
-                    'format': "NUMBER",
+                    'format': "RAW"
                 },
                 {
                     'name': 'explained-variance-score',
                     'numberValue':  evs,
-                    'format': "NUMBER",
+                    'format': "RAW"
                 },
                 {
                     'name': 'r2-score',
                     'numberValue':  r2s,
-                    'format': "NUMBER",
+                    'format': "RAW"
                 }
             ]
         }
 
         with open('/mlpipeline-metrics.json', 'w') as f:
             json.dump(metrics, f)
+        with open('/mlpipeline-metrics.json', 'r') as f:
+            print(f.read())
+
+        print("wrote to file /mlpipeline-metrics.json")
 
         joblib.dump(self._clf, trained_model_path)
 
