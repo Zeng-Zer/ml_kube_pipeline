@@ -1,9 +1,12 @@
 import pandas as pd
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import explained_variance_score, mean_squared_error, r2_score
 import os
 import joblib
+import json
 
+# https://scikit-learn.org/stable/modules/classes.html#regression-metrics
 
 class HousePricingPrediction:
     def __init__(self):
@@ -23,6 +26,33 @@ class HousePricingPrediction:
         self._clf = GradientBoostingRegressor(n_estimators=400, max_depth=5, min_samples_split=2,
                                                  learning_rate=0.1, loss='ls')
         self._clf.fit(x_train, y_train)
+
+        y_predict = self._clf.predict(x_test)
+        mse = mean_squared_error(y_test, y_predict)
+        evs = explained_variance_score(y_test, y_predict)
+        r2s = r2_score(y_test, y_predict)
+        metrics = {
+            'metrics': [
+                {
+                    'name': 'mean-squared-error',
+                    'numberValue':  mse,
+                    'format': "NUMBER",
+                },
+                {
+                    'name': 'explained-variance-score',
+                    'numberValue':  evs,
+                    'format': "NUMBER",
+                },
+                {
+                    'name': 'r2-score',
+                    'numberValue':  r2s,
+                    'format': "NUMBER",
+                }
+            ]
+        }
+
+        with open('/mlpipeline-metrics.json', 'w') as f:
+            json.dump(metrics, f)
 
         joblib.dump(self._clf, trained_model_path)
 
